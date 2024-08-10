@@ -1,0 +1,78 @@
+﻿@using FinalProject.MVC.Settings
+@using FinalProject.MVC.ViewModels
+@model CreateUserFormViewModel
+
+@{
+    ViewData["Title"] = "Add User";
+}
+<h5>
+    <i class="bi bi-plus-circle-dotted"></i>
+    Add a new User
+</h5>
+
+<form asp-asp-controller="User" asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-floating mb-3">
+                <input asp-for="FirstName" class="form-control" placeholder="First Name" />
+                <label asp-for="FirstName"></label>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="LastName" class="form-control" placeholder="Last Name" />
+                <label asp-for="LastName"></label>
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Email" class="form-control" placeholder="Email" />
+                <label asp-for="Email"></label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" asp-for="Password" class="form-control" placeholder="Password" />
+                <label asp-for="Password"></label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password" />
+                <label asp-for="ConfirmPassword"></label>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DepartmentId" class="form-label"></label>
+                <select class="form-select" asp-for="DepartmentId" asp-items="Model.Departments"
+                        data-placeholder="Select a department" data-minimum-results-for-search="Infinity">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="SelectedRoles" class="form-label"></label>
+                <select class="form-select" asp-for="SelectedRoles" asp-items="Model.Roles"
+                        data-placeholder="Select roles">
+                    <option></option>
+                </select>
+                <span asp-validation-for="SelectedRoles" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="file" class="form-control" asp-for="Image"
+                       data-rule-extension="@FileSettings.AllowedExtensions.Replace(".",string.Empty)"
+                       data-msg-extension="Not allowed extension"
+                       data-rule-filesize="@FileSettings.MaxFileSizeInBytes"
+                       data-msg-filesize="Maximum allowed size is @(FileSettings.MaxFileSizeInMB)MB">
+                <small class="form-text text-muted">Only @FileSettings.AllowedExtensions files are allowed with max size @(FileSettings.MaxFileSizeInMB)MB.</small>
+                <span asp-validation-for="Image" class="text-danger d-block"></span>
+            </div>
+            <button type="submit" class="btn btn-primary rounded-2 mt-2">Save</button>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center pt-4 overflow-hidden">
+            <img class="image-preview d-none" alt="Image" />
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/UserForm.js" asp-append-version="true"></script>
+    <script src="~/js/FileSizeValidator.js" asp-append-version="true"></script>
+}
